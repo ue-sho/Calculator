@@ -8,5 +8,5 @@ class BinaryOperator(Expression):
         self.op2 = op2
 
     @abstractmethod
-    def calc(self):
-        return
+    def calc(self) -> int:
+        pass

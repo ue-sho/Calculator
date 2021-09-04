@@ -1,4 +1,4 @@
-from calculator import Calculator
+from calculator.calculator import Calculator
 
 
 def test_calculator_add():

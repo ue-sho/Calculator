@@ -1,5 +1,6 @@
 import queue
-from calculator.domain.add import Add
+from calculator.domain.arithmetic import Add
+from calculator.domain.value import Value
 
 class Calculator:
     BINARY_OP = ['+', '-', '*', '/']
@@ -9,5 +10,14 @@ class Calculator:
 
         for x in s.split():
             if x in self.BINARY_OP:
-                # ex = Add()
-                pass
+                op2 = q.get()
+                op1 = q.get()
+                ex = Add(op1, op2)
+                q.put(ex)
+            else:
+                ex = Value(int(x))
+                q.put(ex)
+
+        ex = q.get()
+        return ex.calc()
+
