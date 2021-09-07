@@ -1,0 +1,10 @@
+@startuml class
+Expression <|-- BinaryOperator
+Expression <|-- Value
+package arithmetic {
+    BinaryOperator <|-- Add
+    BinaryOperator <|-- Substract
+    BinaryOperator <|-- Multiply
+    BinaryOperator <|-- Divide
+}
+@enduml
