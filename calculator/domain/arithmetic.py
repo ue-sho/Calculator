@@ -27,4 +27,4 @@ class Divide(BinaryOperator):
         super().__init__(op1, op2)
 
     def calc(self) -> int:
-        return self.op1.calc() * self.op2.calc()
+        return self.op1.calc() / self.op2.calc()

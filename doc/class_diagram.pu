@@ -1,4 +1,8 @@
 @startuml class
+interface Expression
+abstract BinaryOperator
+
+Calculator *-- Expression
 Expression <|-- BinaryOperator
 Expression <|-- Value
 package arithmetic {
