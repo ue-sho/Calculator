@@ -1,23 +1,24 @@
 import queue
 from typing import List
 
-from calculator.domain import arithmetic, value
+from calculator.domain import arithmetic, value, variable, assignment
 
 
 class Calculator:
-    NUMBER_LIST = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     PLUS = '+'
     MINUS = '-'
     MUL = '*'
     DIV = '/'
+    SimpleAssign = '='
 
     def __init__(self):
         self.expression_queue = queue.LifoQueue()
+        self.symbol_table = {}
 
     def process(self, s: List[str]) -> int:
         for x in s:
 
-            if x in Calculator.NUMBER_LIST:
+            if x.isdigit():
                 ex = value.Value(int(x))
                 self.expression_queue.put(ex)
             elif x is Calculator.PLUS:
@@ -40,8 +41,17 @@ class Calculator:
                 op1 = self.expression_queue.get()
                 ex = arithmetic.Divide(op1, op2)
                 self.expression_queue.put(ex)
+            elif x is Calculator.SimpleAssign:
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = assignment.SimpleAssign(op1, op2)
+                self.expression_queue.put(ex)
+            elif x.isalpha():
+                ex = variable.Variable(x, self.symbol_table)
+                self.expression_queue.put(ex)
             else:
-                raise ValueError
+                raise ValueError('processエラー: %s', x)
+
 
         ex = self.expression_queue.get()
         return ex.calc()

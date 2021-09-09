@@ -5,8 +5,13 @@ END_CMD = ['q', 'quit', 'exit']
 if __name__ == '__main__':
     calc = Calculator()
 
-    print('input expression> ', end='')
-    s = input()
+    while(True):
+        print('input expression> ', end='')
+        s = input()
 
-    # TODO: インプットが正しいかのチェックを別クラスにする
-    print(calc.process(s.split()))
+        if s in END_CMD:
+            exit
+
+        # TODO: インプットが正しいかのチェックを別クラスにする
+        print(calc.process(s.split()))
+
