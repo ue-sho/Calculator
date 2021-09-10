@@ -27,4 +27,7 @@ class Divide(BinaryOperator):
         super().__init__(op1, op2)
 
     def calc(self) -> int:
-        return self.op1.calc() / self.op2.calc()
+        num = self.op2.calc()
+        if(num == 0):
+            raise ValueError("0では割れません")
+        return self.op1.calc() / num

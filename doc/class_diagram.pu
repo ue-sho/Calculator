@@ -12,4 +12,7 @@ package arithmetic {
     BinaryOperator <|-- Multiply
     BinaryOperator <|-- Divide
 }
+package assignment {
+    BinaryOperator <|-- SimpleAssign
+}
 @enduml
