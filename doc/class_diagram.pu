@@ -1,18 +1,28 @@
 @startuml class
-interface Expression
-abstract BinaryOperator
-
+package domain {
+    interface Expression
+    Expression <|-- Value
+    Expression <|-- Variable
+}
+package operator {
+    abstract BinaryOperator
+    Expression <|-- BinaryOperator
+    package arithmetic {
+        BinaryOperator <|-- Add
+        BinaryOperator <|-- Substract
+        BinaryOperator <|-- Multiply
+        BinaryOperator <|-- Divide
+    }
+    package assignment {
+        BinaryOperator <|-- SimpleAssign
+    }
+}
+package request {
+    CalculatorRequest *-- CalculatorValidRequest
+    CalculatorRequest *-- CalculatorInValidRequest
+}
 Calculator *-- Expression
-Expression <|-- BinaryOperator
-Expression <|-- Value
-Expression <|-- Variable
-package arithmetic {
-    BinaryOperator <|-- Add
-    BinaryOperator <|-- Substract
-    BinaryOperator <|-- Multiply
-    BinaryOperator <|-- Divide
-}
-package assignment {
-    BinaryOperator <|-- SimpleAssign
-}
+Calculator *-- CalculatorValidRequest
+
+
 @enduml

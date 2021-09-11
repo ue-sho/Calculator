@@ -1,19 +1,36 @@
 import pytest
 
+from calculator.request.calculator_request import CalculatorRequest
 from calculator.calculator import Calculator
+from calculator.exception.calculate_error import CalculatorError
 
 
 def test_calculator_add():
-    calc = Calculator()
-    assert calc.process("1 2 +".split()) == 3
+    calculator = Calculator()
 
+    request = CalculatorRequest.create("1 2 +")
+    assert bool(request) is True
 
-def test_calculator_variable():
-    calc = Calculator()
-    assert calc.process("x 10 =".split()) == 10
+    res = calculator.execute(request)
+    assert res == 3
 
 
 def test_calculator_div_zero():
-    calc = Calculator()
-    with pytest.raises(ValueError):
-        calc.process("1 0 /".split()) == 10
+    calculator = Calculator()
+
+    request = CalculatorRequest.create("1 0 /")
+    assert bool(request) is True
+
+    with pytest.raises(CalculatorError):
+        res = calculator.execute(request)
+
+
+def test_calculator_variable():
+    calculator = Calculator()
+
+    request = CalculatorRequest.create("x 10 =")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 10
+

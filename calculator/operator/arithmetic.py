@@ -1,5 +1,6 @@
 from calculator.operator.binary_operator import BinaryOperator
 from calculator.domain.expression import Expression
+from calculator.exception.calculate_error import CalculatorError
 
 class Add(BinaryOperator):
     def __init__(self, op1: Expression, op2: Expression):
@@ -29,5 +30,5 @@ class Divide(BinaryOperator):
     def calc(self) -> int:
         num = self.op2.calc()
         if(num == 0):
-            raise ValueError("0では割れません")
+            raise CalculatorError("ゼロ除算発生")
         return self.op1.calc() / num
