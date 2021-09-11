@@ -4,6 +4,9 @@ from calculator.calculator import Calculator
 
 
 def test_calculator_add():
+    input_data = "1 2 +"
+    check_input_usecase = CheckInputUseCase(input_data)
+    check_input_usecase
     calc = Calculator()
     assert calc.process("1 2 +".split()) == 3
 

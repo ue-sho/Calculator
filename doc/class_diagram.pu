@@ -2,10 +2,11 @@
 interface Expression
 abstract BinaryOperator
 
-Calculator *-- Expression
-Expression <|-- BinaryOperator
-Expression <|-- Value
-Expression <|-- Variable
+CheckInputUseCase *-- Expression
+CalculateUseCase *- Expression
+Expression <|- BinaryOperator
+Expression <|- Value
+Expression <|- Variable
 package arithmetic {
     BinaryOperator <|-- Add
     BinaryOperator <|-- Substract
