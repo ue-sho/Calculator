@@ -1,7 +1,10 @@
 import queue
 from typing import List
 
-from calculator.domain import arithmetic, value, variable, assignment
+from calculator.domain import value
+from calculator.domain import variable
+from calculator.operator import arithmetic
+from calculator.operator import assignment
 
 
 class Calculator:

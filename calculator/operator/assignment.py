@@ -1,4 +1,4 @@
-from calculator.domain.binary_operator import BinaryOperator
+from calculator.operator.binary_operator import BinaryOperator
 from calculator.domain.expression import Expression
 from calculator.domain.variable import Variable
 
@@ -12,3 +12,4 @@ class SimpleAssign(BinaryOperator):
         num = self.op2.calc()
         self.op1.set_value(num)
         return num
+

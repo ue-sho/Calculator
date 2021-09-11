@@ -1,4 +1,4 @@
-from calculator.domain.binary_operator import BinaryOperator
+from calculator.operator.binary_operator import BinaryOperator
 from calculator.domain.expression import Expression
 
 class Add(BinaryOperator):
