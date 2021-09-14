@@ -1,4 +1,4 @@
-from calculator.operator.binary_operator import BinaryOperator
+from calculator.binary_operator.binary_operator import BinaryOperator
 from calculator.domain.expression import Expression
 from calculator.domain.variable import Variable
 from calculator.exception.calculate_error import CalculatorError

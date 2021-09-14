@@ -9,9 +9,12 @@ from calculator.domain import (
     value,
     variable
 )
-from calculator.operator import (
+from calculator.binary_operator import (
     arithmetic,
     assignment
+)
+from calculator.unary_operator import (
+    inc_dec,
 )
 
 class Calculator:
@@ -55,6 +58,14 @@ class Calculator:
                 op2 = self.expression_queue.get()
                 op1 = self.expression_queue.get()
                 ex = assignment.SimpleAssign(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '++':
+                op1 = self.expression_queue.get()
+                ex = inc_dec.Increment(op1)
+                self.expression_queue.put(ex)
+            elif token == '--':
+                op1 = self.expression_queue.get()
+                ex = inc_dec.Decrement(op1)
                 self.expression_queue.put(ex)
             elif token.isalpha():
                 ex = variable.Variable(token, self.symbol_table)

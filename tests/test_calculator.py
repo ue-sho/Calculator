@@ -34,3 +34,21 @@ def test_calculator_variable():
     res = calculator.execute(request)
     assert res == 10
 
+def test_calculator_increment():
+    calculator = Calculator()
+
+    request = CalculatorRequest.create("10 ++")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 11
+
+def test_calculator_decrement():
+    calculator = Calculator()
+
+    request = CalculatorRequest.create("3 --")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 2
+
