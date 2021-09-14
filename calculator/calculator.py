@@ -31,6 +31,7 @@ class Calculator:
 
         token_list = request.token_list
         for token in token_list:
+            print(token, self.expression_queue)
             if token.isdigit():
                 ex = value.Value(int(token))
                 self.expression_queue.put(ex)
@@ -58,6 +59,27 @@ class Calculator:
                 op2 = self.expression_queue.get()
                 op1 = self.expression_queue.get()
                 ex = assignment.SimpleAssign(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '+=':
+                print("------*********************")
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = assignment.AddAssign(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '-=':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = assignment.SubAssign(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '*=':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = assignment.MulAssign(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '/=':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = assignment.DivAssign(op1, op2)
                 self.expression_queue.put(ex)
             elif token == '++':
                 op1 = self.expression_queue.get()

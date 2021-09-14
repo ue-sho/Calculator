@@ -52,3 +52,44 @@ def test_calculator_decrement():
     res = calculator.execute(request)
     assert res == 2
 
+
+@pytest.fixture
+def assignment_x_calculator():
+    calculator = Calculator()
+
+    request = CalculatorRequest.create("x 10 =")
+    res = calculator.execute(request)
+    return calculator
+
+
+def test_calculator_add_assign(assignment_x_calculator):
+    request = CalculatorRequest.create("x 10 +=")
+    assert bool(request) is True
+
+    res = assignment_x_calculator.execute(request)
+    assert res == 20
+
+
+def test_calculator_sub_assign(assignment_x_calculator):
+    request = CalculatorRequest.create("x 1 -= ")
+    assert bool(request) is True
+
+    res = assignment_x_calculator.execute(request)
+    assert res == 9
+
+
+def test_calculator_mul_assign(assignment_x_calculator):
+    request = CalculatorRequest.create("x 0 *=")
+    assert bool(request) is True
+
+    res = assignment_x_calculator.execute(request)
+    assert res == 0
+
+
+def test_calculator_div_assign(assignment_x_calculator):
+    request = CalculatorRequest.create("x 5 /=")
+    assert bool(request) is True
+
+    res = assignment_x_calculator.execute(request)
+    assert res == 2
+
