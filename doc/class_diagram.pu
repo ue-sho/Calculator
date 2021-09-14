@@ -4,7 +4,7 @@ package domain {
     Expression <|-- Value
     Expression <|-- Variable
 }
-package operator {
+package binary_operator {
     abstract BinaryOperator
     Expression <|-- BinaryOperator
     package arithmetic {
@@ -15,6 +15,18 @@ package operator {
     }
     package assignment {
         BinaryOperator <|-- SimpleAssign
+        BinaryOperator <|-- AddAssign
+        BinaryOperator <|-- SubAssign
+        BinaryOperator <|-- MulAssign
+        BinaryOperator <|-- DivAssign
+    }
+}
+package unary_operator {
+    abstract UnaryOperator
+    Expression <|-- UnaryOperator
+    package inc_dec {
+        UnaryOperator <|-- Increment
+        UnaryOperator <|-- Decrement
     }
 }
 package request {
