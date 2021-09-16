@@ -11,7 +11,8 @@ from calculator.domain import (
 )
 from calculator.binary_operator import (
     arithmetic,
-    assignment
+    assignment,
+    bitwise_operator
 )
 from calculator.unary_operator import (
     inc_dec,
@@ -54,6 +55,11 @@ class Calculator:
                 op1 = self.expression_queue.get()
                 ex = arithmetic.Divide(op1, op2)
                 self.expression_queue.put(ex)
+            elif token == '%':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = arithmetic.Modulo(op1, op2)
+                self.expression_queue.put(ex)
             elif token == '=':
                 op2 = self.expression_queue.get()
                 op1 = self.expression_queue.get()
@@ -86,6 +92,31 @@ class Calculator:
             elif token == '--':
                 op1 = self.expression_queue.get()
                 ex = inc_dec.Decrement(op1)
+                self.expression_queue.put(ex)
+            elif token == '&':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = bitwise_operator.And(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '|':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = bitwise_operator.Or(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '^':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = bitwise_operator.Xor(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '>>':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = bitwise_operator.RightShift(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '<<':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = bitwise_operator.LeftShift(op1, op2)
                 self.expression_queue.put(ex)
             elif token.isalpha():
                 ex = variable.Variable(token, self.symbol_table)

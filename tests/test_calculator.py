@@ -4,10 +4,21 @@ from calculator.request.calculator_request import CalculatorRequest
 from calculator.calculator import Calculator
 from calculator.exception.calculate_error import CalculatorError
 
+@pytest.fixture
+def calculator():
+    return Calculator()
 
-def test_calculator_add():
+
+@pytest.fixture
+def assignment_x_calculator(calculator):
     calculator = Calculator()
 
+    request = CalculatorRequest.create("x 10 =")
+    res = calculator.execute(request)
+    return calculator
+
+
+def test_calculator_add(calculator):
     request = CalculatorRequest.create("1 2 +")
     assert bool(request) is True
 
@@ -15,9 +26,7 @@ def test_calculator_add():
     assert res == 3
 
 
-def test_calculator_div_zero():
-    calculator = Calculator()
-
+def test_calculator_div_zero(calculator):
     request = CalculatorRequest.create("1 0 /")
     assert bool(request) is True
 
@@ -25,41 +34,28 @@ def test_calculator_div_zero():
         res = calculator.execute(request)
 
 
-def test_calculator_variable():
-    calculator = Calculator()
-
+def test_calculator_variable(calculator):
     request = CalculatorRequest.create("x 10 =")
     assert bool(request) is True
 
     res = calculator.execute(request)
     assert res == 10
 
-def test_calculator_increment():
-    calculator = Calculator()
 
-    request = CalculatorRequest.create("10 ++")
+def test_calculator_increment(assignment_x_calculator):
+    request = CalculatorRequest.create("x ++")
     assert bool(request) is True
 
-    res = calculator.execute(request)
+    res = assignment_x_calculator.execute(request)
     assert res == 11
 
-def test_calculator_decrement():
-    calculator = Calculator()
 
-    request = CalculatorRequest.create("3 --")
+def test_calculator_decrement(assignment_x_calculator):
+    request = CalculatorRequest.create("x --")
     assert bool(request) is True
 
-    res = calculator.execute(request)
-    assert res == 2
-
-
-@pytest.fixture
-def assignment_x_calculator():
-    calculator = Calculator()
-
-    request = CalculatorRequest.create("x 10 =")
-    res = calculator.execute(request)
-    return calculator
+    res = assignment_x_calculator.execute(request)
+    assert res == 9
 
 
 def test_calculator_add_assign(assignment_x_calculator):
@@ -92,4 +88,53 @@ def test_calculator_div_assign(assignment_x_calculator):
 
     res = assignment_x_calculator.execute(request)
     assert res == 2
+
+
+def test_calculator_modulo(calculator):
+    request = CalculatorRequest.create("13 5 %")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 3
+
+
+def test_calculator_right_shift(calculator):
+    request = CalculatorRequest.create("32 2 >>")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 8
+
+
+def test_calculator_left_shift(calculator):
+    request = CalculatorRequest.create("2 5 <<")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 64
+
+
+def test_calculator_and(calculator):
+    request = CalculatorRequest.create("1399 432 &")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 304
+
+
+def test_calculator_or(calculator):
+    request = CalculatorRequest.create("23 133 |")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 151
+
+
+def test_calculator_xor(calculator):
+    request = CalculatorRequest.create("234 434 ^")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 344
+
 
