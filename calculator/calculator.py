@@ -119,6 +119,21 @@ class Calculator:
                 op1 = self.expression_queue.get()
                 ex = bitwise_operator.LeftShift(op1, op2)
                 self.expression_queue.put(ex)
+            elif token == '>>=':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = assignment.RightShiftAssign(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '<<=':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = assignment.LeftShiftAssign(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '%=':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = assignment.ModuloAssign(op1, op2)
+                self.expression_queue.put(ex)
             elif token == '==':
                 op2 = self.expression_queue.get()
                 op1 = self.expression_queue.get()

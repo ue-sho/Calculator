@@ -184,3 +184,26 @@ def test_calculator_greater_equal(calculator):
 
     res = calculator.execute(request)
     assert res == 1
+
+
+def test_calculator_right_shift_assign(assignment_x_calculator):
+    request = CalculatorRequest.create("x 1 >>=")
+    assert bool(request) is True
+
+    res = assignment_x_calculator.execute(request)
+    assert res == 5
+
+
+def test_calculator_left_shift_assign(assignment_x_calculator):
+    request = CalculatorRequest.create("x 3 <<=")
+    assert bool(request) is True
+
+    res = assignment_x_calculator.execute(request)
+    assert res == 80
+
+def test_calculator_modulo_assign(assignment_x_calculator):
+    request = CalculatorRequest.create("x 4 %=")
+    assert bool(request) is True
+
+    res = assignment_x_calculator.execute(request)
+    assert res == 2
