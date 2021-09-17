@@ -3,6 +3,8 @@ from abc import abstractmethod
 from calculator.domain.expression import Expression
 from calculator.domain.variable import Variable
 from calculator.unary_operator.unary_operator import UnaryOperator
+from calculator.exception.calculate_error import CalculatorError
+
 
 class Increment(UnaryOperator):
     def __init__(self, op1: Expression):
