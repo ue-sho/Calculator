@@ -138,3 +138,49 @@ def test_calculator_xor(calculator):
     assert res == 344
 
 
+def test_calculator_equal(calculator):
+    request = CalculatorRequest.create("5 5 ==")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 1
+
+
+def test_calculator_not_equal(calculator):
+    request = CalculatorRequest.create("1 0 !=")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 1
+
+
+def test_calculator_less(calculator):
+    request = CalculatorRequest.create("234 434 <")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 1
+
+
+def test_calculator_less_equal(calculator):
+    request = CalculatorRequest.create("432 432 <=")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 1
+
+
+def test_calculator_greater(calculator):
+    request = CalculatorRequest.create("23 133 >")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 0
+
+
+def test_calculator_greater_equal(calculator):
+    request = CalculatorRequest.create("234 234 >=")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 1

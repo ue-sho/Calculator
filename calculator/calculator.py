@@ -12,7 +12,8 @@ from calculator.domain import (
 from calculator.binary_operator import (
     arithmetic,
     assignment,
-    bitwise_operator
+    bitwise_operator,
+    relational_operator
 )
 from calculator.unary_operator import (
     inc_dec,
@@ -117,6 +118,36 @@ class Calculator:
                 op2 = self.expression_queue.get()
                 op1 = self.expression_queue.get()
                 ex = bitwise_operator.LeftShift(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '==':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = relational_operator.Equal(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '!=':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = relational_operator.NotEqual(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '<':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = relational_operator.Less(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '<=':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = relational_operator.LessEqual(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '>':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = relational_operator.Greater(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '>=':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = relational_operator.GreaterEqual(op1, op2)
                 self.expression_queue.put(ex)
             elif token.isalpha():
                 ex = variable.Variable(token, self.symbol_table)
