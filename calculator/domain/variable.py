@@ -1,7 +1,7 @@
 from typing import Dict
 
 from calculator.domain.expression import Expression
-
+from calculator.exception.calculate_error import CalculatorError
 
 class Variable(Expression):
     def __init__(self, symbol: str, symbol_table: Dict):
@@ -14,5 +14,5 @@ class Variable(Expression):
     def calc(self):
         val = self.symbol_table.get(self.symbol)
         if val is None:
-            raise ValueError('symbol_tableになかった')
+            raise CalculatorError('symbol_tableに{}が見つかりませんでした'.format(val))
         return val
