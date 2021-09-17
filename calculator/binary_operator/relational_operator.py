@@ -1,6 +1,5 @@
 from calculator.binary_operator.binary_operator import BinaryOperator
 from calculator.domain.expression import Expression
-from calculator.exception.calculate_error import CalculatorError
 
 class Equal(BinaryOperator):
     def __init__(self, op1: Expression, op2: Expression):

@@ -207,3 +207,26 @@ def test_calculator_modulo_assign(assignment_x_calculator):
 
     res = assignment_x_calculator.execute(request)
     assert res == 2
+
+def test_calculator_both(calculator):
+    request = CalculatorRequest.create("432 0 &&")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 0
+
+
+def test_calculator_greater(calculator):
+    request = CalculatorRequest.create("23 0 ||")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 1
+
+
+def test_calculator_greater_equal(calculator):
+    request = CalculatorRequest.create("234 !")
+    assert bool(request) is True
+
+    res = calculator.execute(request)
+    assert res == 0

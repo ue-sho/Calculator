@@ -13,13 +13,16 @@ from calculator.binary_operator import (
     arithmetic,
     assignment,
     bitwise_operator,
-    relational_operator
+    relational_operator,
+    logical_operator
 )
 from calculator.unary_operator import (
     inc_dec,
+    logical_not
 )
 
 class Calculator:
+
     def __init__(self):
         self.expression_queue = queue.LifoQueue()
         self.symbol_table = {}
@@ -163,6 +166,20 @@ class Calculator:
                 op2 = self.expression_queue.get()
                 op1 = self.expression_queue.get()
                 ex = relational_operator.GreaterEqual(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '&&':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = logical_operator.Both(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '||':
+                op2 = self.expression_queue.get()
+                op1 = self.expression_queue.get()
+                ex = logical_operator.Either(op1, op2)
+                self.expression_queue.put(ex)
+            elif token == '!':
+                op1 = self.expression_queue.get()
+                ex = logical_not.LogicalNot(op1)
                 self.expression_queue.put(ex)
             elif token.isalpha():
                 ex = variable.Variable(token, self.symbol_table)
