@@ -230,3 +230,12 @@ def test_calculator_greater_equal(calculator):
 
     res = calculator.execute(request)
     assert res == 0
+
+
+def test_calculator_queue_exception(calculator):
+    request = CalculatorRequest.create("1 + +")
+    assert bool(request) is True
+
+    with pytest.raises(CalculatorError):
+        calculator.execute(request)
+
