@@ -12,6 +12,7 @@ package binary_operator {
         BinaryOperator <|-- Substract
         BinaryOperator <|-- Multiply
         BinaryOperator <|-- Divide
+        BinaryOperator <|-- Modulo
     }
     package assignment {
         BinaryOperator <|-- SimpleAssign
@@ -19,14 +20,39 @@ package binary_operator {
         BinaryOperator <|-- SubAssign
         BinaryOperator <|-- MulAssign
         BinaryOperator <|-- DivAssign
+        BinaryOperator <|-- RightShiftAssign
+        BinaryOperator <|-- LeftShiftAssign
+        BinaryOperator <|-- ModuloAssign
+    }
+    package bitwise_operator {
+        BinaryOperator <|- And
+        BinaryOperator <|- Or
+        BinaryOperator <|- Xor
+        BinaryOperator <|- RightShift
+        BinaryOperator <|- LeftShift
+    }
+    package logical_operator {
+        BinaryOperator <|- Both
+        BinaryOperator <|- Either
+    }
+    package relatonal_operator {
+        BinaryOperator <|- Equal
+        BinaryOperator <|- NotEqual
+        BinaryOperator <|- Less
+        BinaryOperator <|- LessEqual
+        BinaryOperator <|- Greater
+        BinaryOperator <|- GreaterEqual
     }
 }
 package unary_operator {
     abstract UnaryOperator
-    Expression <|-- UnaryOperator
+    Expression <|- UnaryOperator
     package inc_dec {
-        UnaryOperator <|-- Increment
-        UnaryOperator <|-- Decrement
+        UnaryOperator <|- Increment
+        UnaryOperator <|- Decrement
+    }
+    package logical_not {
+        UnaryOperator <|- LogicalNot
     }
 }
 package request {
