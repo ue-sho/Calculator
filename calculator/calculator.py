@@ -1,5 +1,3 @@
-import queue
-
 from calculator.exception.calculate_error import CalculatorError
 from calculator.request.calculator_request import (
     CalculatorValidRequest,
@@ -58,36 +56,40 @@ class Calculator:
 
 
     def __init__(self):
-        self.expression_queue = queue.LifoQueue()
+        self.expression_stack = []
         self.symbol_table = {}
 
     def execute(self, request):
-        if request.cmd == CalculatorCommand.PRINT_CMD:
-            ex = self.expression_queue.get()
+        try:
+            if request.cmd == CalculatorCommand.PRINT_CMD:
+                ex = self.expression_stack.pop()
+                return ex.calc()
+            elif request.cmd == CalculatorCommand.QUIT_CMD:
+                return None
+
+            token_list = request.token_list
+            for token in token_list:
+                if token.isdigit():
+                    ex = value.Value(int(token))
+                    self.expression_stack.append(ex)
+                elif token.isalpha():
+                    ex = variable.Variable(token, self.symbol_table)
+                    self.expression_stack.append(ex)
+                elif token in self.BINARY_OPERATOR_FUNCTION_TABLE.keys():
+                    op2 = self.expression_stack.pop()
+                    op1 = self.expression_stack.pop()
+                    ex = self.BINARY_OPERATOR_FUNCTION_TABLE[token](op1, op2)
+                    self.expression_stack.append(ex)
+                elif token in self.UNARY_OPERATOR_FUNCTION_TABLE.keys():
+                    op1 = self.expression_stack.pop()
+                    ex = self.UNARY_OPERATOR_FUNCTION_TABLE[token](op1)
+                    self.expression_stack.append(ex)
+                else:
+                    raise CalculatorError('不正な値です: {}'.format(token))
+
+            ex = self.expression_stack.pop()
             return ex.calc()
-        elif request.cmd == CalculatorCommand.QUIT_CMD:
-            return None
+        except IndexError:
+            raise CalculatorError('演算子と値の数が合っていません')
 
-        token_list = request.token_list
-        for token in token_list:
-            if token.isdigit():
-                ex = value.Value(int(token))
-                self.expression_queue.put(ex)
-            elif token.isalpha():
-                ex = variable.Variable(token, self.symbol_table)
-                self.expression_queue.put(ex)
-            elif token in self.BINARY_OPERATOR_FUNCTION_TABLE.keys():
-                op2 = self.expression_queue.get()
-                op1 = self.expression_queue.get()
-                ex = self.BINARY_OPERATOR_FUNCTION_TABLE[token](op1, op2)
-                self.expression_queue.put(ex)
-            elif token in self.UNARY_OPERATOR_FUNCTION_TABLE.keys():
-                op1 = self.expression_queue.get()
-                ex = self.UNARY_OPERATOR_FUNCTION_TABLE[token](op1)
-                self.expression_queue.put(ex)
-            else:
-                raise CalculatorError('不正な値です: {}'.format(token))
-
-        ex = self.expression_queue.get()
-        return ex.calc()
 
